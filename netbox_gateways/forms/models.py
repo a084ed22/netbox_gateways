@@ -1,13 +1,14 @@
-from django import forms
-
 from ipam.models import Prefix, IPAddress, VRF
-from netbox.forms import NetBoxModelForm, NetBoxModelFilterSetForm
+from netbox.forms import NetBoxModelForm
 from utilities.forms.fields import CommentField, DynamicModelChoiceField
-from .models import Gateway
+from ..models import Gateway
+
+__all__ = (
+    'GatewayForm',
+)
 
 
 class GatewayForm(NetBoxModelForm):
-
     vrf = DynamicModelChoiceField(
         queryset=VRF.objects.all(),
         null_option="Global",
@@ -25,20 +26,3 @@ class GatewayForm(NetBoxModelForm):
     class Meta:
         model = Gateway
         fields = ("vrf", "prefix", "gateway_ip", "tags")
-
-
-class GatewayFilterForm(NetBoxModelFilterSetForm):
-    model = Gateway
-    vrf = DynamicModelChoiceField(
-        queryset=VRF.objects.all(),
-        null_option="Global",
-        required=False,
-    )
-    prefix = DynamicModelChoiceField(
-        queryset=Prefix.objects.all(),
-        required=False,
-    )
-    gateway_ip = DynamicModelChoiceField(
-        queryset=IPAddress.objects.all(),
-        required=False,
-    )

@@ -7,6 +7,7 @@ from . import models, views
 urlpatterns = (
     # Gateway lists
     path("gateways-list/", views.GatewayListView.as_view(), name="gateway_list"),
+    path("gateways-list/import/", views.GatewayBulkImportView.as_view(), name="gateway_import"),
     path("gateway/add/", views.GatewayEditView.as_view(), name="gateway_add"),
     path("gateway/<int:pk>/", views.GatewayView.as_view(), name="gateway"),
     path("gateway/<int:pk>/edit/", views.GatewayEditView.as_view(), name="gateway_edit"),
